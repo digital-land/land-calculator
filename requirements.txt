@@ -1,0 +1,6 @@
+geopandas
+shapely
+pyrosm
+esridump
+simplejson
+pyogrio

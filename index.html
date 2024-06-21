@@ -1,0 +1,242 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Land calculator</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+body {
+  padding: 0;
+  margin: 0;
+}
+html, body, #map {
+  height: 100%;
+  width: 100vw;
+  color: #0b0c0c;
+}
+#info {
+  font-size: 14px;
+  font-family: sans-serif;
+  background: white;
+  color: #0b0c0c;
+  overflow-y: auto; 
+  max-height: 100vh;
+  position: absolute;
+  margin: 0;
+  top: 0px;
+  left: 0px;
+  z-index: 998;
+}
+#options {
+  padding: 0 8px 0;
+}
+#about {
+  float: right;
+  padding-bottom: 8px;
+}
+.totals {
+  margin: 0;
+  position: sticky;
+  background-color: white;
+  top: 0;
+  z-index: 999;
+}
+#total {
+  font-weight: bold;
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 24px;
+}
+#total-value {
+  font-size: 78px;
+}
+.units {
+  display: block;
+  text-align: right;
+  margin-top: -14px;
+}
+h1 {
+  font-size: 32px;
+}
+h2 {
+  font-size: 16px;
+}
+input[type=checkbox] {
+  vertical-align: middle;
+  position: relative;
+  bottom: 1px;
+}
+label {
+  padding-left: 2px;
+}
+fieldset {
+  margin: 14px 0px;
+}
+</style>
+</head>
+<body>
+<div id="info">
+  <div class="totals">
+    <div id="total">
+      <span id="total-value"></span>
+      <span class="units">hectares</span>
+    </div>
+  </div>
+  <div id="options">
+  <h2>Within</h2>
+  <fieldset>
+  <legend>Region</legend>
+  <div><input type="checkbox" name="E12000001" class="within region" checked="checked" /><label>North East</label></div>
+  <div><input type="checkbox" disabled=disabled name="E12000002" class="within region" /><label>North West</label></div>
+  <div><input type="checkbox" disabled=disabled name="E12000003" class="within region" /><label>Yorkshire and The Humber</label></div>
+  <div><input type="checkbox" disabled=disabled name="E12000004" class="within region" /><label>East Midlands</label></div>
+  <div><input type="checkbox" disabled=disabled name="E12000005" class="within region" /><label>West Midlands</label></div>
+  <div><input type="checkbox" disabled=disabled name="E12000006" class="within region" /><label>East of England</label></div>
+  <div><input type="checkbox" disabled=disabled name="E12000007" class="within region" /><label>London</label></div>
+  <div><input type="checkbox" disabled=disabled name="E12000008" class="within region" /><label>South East</label></div>
+  <div><input type="checkbox" disabled=disabled name="E12000009" class="within region" /><label>South West</label></div>
+  </fieldset>
+  <fieldset>
+  <legend>Travel time</legend>
+  <div><input type="checkbox" disabled=disabled name="15" class="within time" /><label>15 minutes</label></div>
+  <div><input type="checkbox" disabled=disabled name="30" class="within time" /><label>30 minutes</label></div>
+  </fieldset>
+  <fieldset>
+  <legend>Urban environment</legend>
+  <div><input type="checkbox" disabled=disabled name="within-green-belt" class="within green-belt" /><label>Green belt</label></div>
+  <div><input type="checkbox" disabled=disabled name="within-200m" class="within buffer" /><label>200m of a built up area</label></div>
+  </fieldset>
+  <h2>Excluding</h2>
+  <fieldset>
+  <legend>Urban environment</legend>
+  <div><input type="checkbox" disabled=disabled checked=checked name="built-up-area"/><label>Built up areas</label></div>
+  <div><input type="checkbox" disabled=disables name="green-belt"/><label>Green belt</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "green-space"/><label>Green space</label></div>
+  </fieldset>
+  <fieldset>
+  <legend>Environment</legend>
+  <div><input type="checkbox"  disabled=disabled checked=checked "national-park"/><label>National parks</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "area-of-outstanding-natural-beauty"/><label>Areas of outstanding natural beauty</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "ancient-woodland"/><label>Ancient woodland</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "heritage-coast"/><label>Heritage coast</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "local-nature-reserve"/><label>Local nature reserves</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "national-nature-reserve"/><label>Local nature reserves</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "park-and-garden"/><label>Parks and gardens</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "ramsar"/><label>Ramsar sites</label></div>
+  </fieldset>
+  <fieldset>
+  <legend>Heritage</legend>
+  <div><input type="checkbox"  disabled=disabled checked=checked "battlefield"/><label>Battlefields</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "conservation-area"/><label>Conservation areas</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "scheduled-monument"/><label>Scheduled monuments</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "site-of-special-scientific-interest"/><label>Sites of special scientific interest</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "special-area-of-conservation"/><label>Special areas of conservation</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "special-protection-area"/><label>Special protection areas</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "world-heritage-site"/><label>World heritage sites and buffer zones</label></div>
+  </fieldset>
+  <fieldset>
+  <legend>Flood risk</legend>
+  <div><input type="checkbox"  disabled=disabled checked=checked "flood-risk-1"/><label>Flood risk 1</label></div>
+  <div><input type="checkbox"  disabled=disabled checked=checked "flood-risk-2"/><label>Flood risk 2</label></div>
+  </fieldset>
+  <a href="https://github.com/digital-land/land-use/blob/main/README.md" id="about">About this prototype</a>
+  </div>
+</div>
+<div id="map"></div>
+</body>
+<script type="text/javascript">
+
+const map = L.map(document.getElementById('map'), { center: [53.02, -1.05], zoom: 7, });
+var basemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+})
+basemap.addTo(map);
+
+L.Control.geocoder({
+    defaultMarkGeocode: false,
+    position: 'topright',
+    geocoder: new L.Control.Geocoder.Nominatim({
+        geocodingQueryParams: {
+            "bounded": 1,
+            "viewbox": "-9.0,49.75,2.01,61.01"
+        }
+    })
+  })
+  .on('markgeocode', function(e) {
+    var point = new L.latLng(e.geocode.center.lat, e.geocode.center.lng);
+    map.setView(point, 14);
+  })
+  .addTo(map);
+
+map.zoomControl.setPosition('topright');
+var regions = {};
+var areas = {};
+
+
+function loadJson(url, callback) {
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => callback(data))
+        .catch(error => console.error('Error loading JSON:', error));
+}
+
+function updateTotals() {
+    console.log(areas)
+    hectares = 0;
+    document.querySelectorAll('input[name="E12000001"]:checked').forEach(function(e) {
+        hectares += areas[e.name]["region"];
+    });
+    document.getElementById('total-value').innerHTML = Number(hectares).toLocaleString('en', {useGrouping:true});
+}
+
+function addRegion(region, options) {
+    filename = region + options + '.geojson'
+    filename = region + '-excludes-built-up-area' + '.geojson'
+    loadJson("shapes/" + filename, function(data) {
+        layer = L.geoJSON(data);
+        layer.addTo(map);
+        map.fitBounds(layer.getBounds())
+	regions[region] = layer;
+    });
+}
+
+function removeRegion(region) {
+    if (regions[region]) {
+        map.removeLayer(regions[region]);
+        regions[region] = undefined;
+    }
+}
+
+function checkbox(e) {
+    hectares = 0;
+    if (e.classList.contains("region")) {
+        removeRegion(e.name);
+        if (e.checked) {
+           addRegion(e.name, "-excludes");
+        }
+    }
+    updateTotals();
+}
+
+window.onload = function() {
+    loadJson("shapes/areas.json", function(json) {
+	areas = json;
+	document.querySelectorAll('#options input').forEach(function(e) {
+	    e.addEventListener("change", function() { checkbox(this); })
+	    checkbox(e);
+	});
+    });
+};
+  </script>
+</html>
