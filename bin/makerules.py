@@ -33,6 +33,7 @@ datasets = [
 
 lads = {}
 regions = {}
+sep = "\\\n    "
 
 
 if __name__ == "__main__":
@@ -48,14 +49,17 @@ if __name__ == "__main__":
 
     print("all::\n\t@:\n")
 
-    print("DATASETS=", end="")
-    sep = "\\\n    "
+    print("\nDATASETS=", end="")
     for dataset in sorted(datasets):
         print(f"{sep}$(CACHE_DIR){dataset}.geojson", end="")
     print()
 
+    print("\nREGION_DATA=", end="")
+    for region in sorted(regions):
+        print(f"{sep}$(REGION_DIR){region}/region.geojson", end="")
+    print()
+
     print("\nLAD_DATA=", end="")
-    sep = "\\\n    "
     for dataset in datasets:
         if dataset in ["region"]:
             continue
@@ -85,3 +89,15 @@ if __name__ == "__main__":
         )
         print(f"\tpython3 bin/shard-dataset.py {dataset}")
         print()
+
+
+    print()
+    for region in sorted(regions):
+        print(f"$(REGION_DIR){region}/region.geojson ", end="")
+    print(
+        f"&:"
+        f" $(CACHE_DIR)region.geojson"
+        f" bin/shard-region.py"
+    )
+    print(f"\tpython3 bin/shard-region.py")
+    print()
