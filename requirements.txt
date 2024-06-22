@@ -1,6 +1,6 @@
 geopandas
 shapely
 pyrosm
+pyogrio
 esridump
 simplejson
-pyogrio

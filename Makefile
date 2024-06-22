@@ -1,45 +1,43 @@
 CACHE_DIR=var/cache/
+LAD_DIR=var/lad/
+REGION_DIR=region/
 
-DATASETS=\
-    $(CACHE_DIR)england.geojson\
-    $(CACHE_DIR)ancient-woodland.geojson\
-    $(CACHE_DIR)area-of-outstanding-natural-beauty.geojson\
-    $(CACHE_DIR)heritage-coast.geojson\
-    $(CACHE_DIR)park-and-garden.geojson\
-    $(CACHE_DIR)local-nature-reserve.geojson\
-    $(CACHE_DIR)national-nature-reserve.geojson\
-    $(CACHE_DIR)national-park.geojson\
-    $(CACHE_DIR)ramsar.geojson\
-    $(CACHE_DIR)site-of-special-scientific-interest.geojson\
-    $(CACHE_DIR)special-area-of-conservation.geojson\
-    $(CACHE_DIR)special-protection-area.geojson\
-    $(CACHE_DIR)flood-risk-zone.geojson\
-    $(CACHE_DIR)battlefield.geojson\
-    $(CACHE_DIR)conservation-area.geojson\
-    $(CACHE_DIR)scheduled-monument.geojson\
-    $(CACHE_DIR)world-heritage-site.geojson\
-    $(CACHE_DIR)world-heritage-site-buffer-zone.geojson\
-    $(CACHE_DIR)built-up-area.geojson\
-    $(CACHE_DIR)region.geojson\
-    $(CACHE_DIR)green-space.geojson\
-    $(CACHE_DIR)green-belt.geojson
+REGION_DATA=
 
-all:	$(DATASETS) #docs/index.html
+include makerules.mk
+
+all::	$(REGION_DATA) $(LAD_DATA)
+
+server:
+	python3 -m http.server
+
+makerules:	makerules.mk
+
+makerules.mk::  $(CACHE_DIR)organisation.csv bin/makerules.py
+	python3 bin/makerules.py > $@
+
+init::
+	pip3 install --upgrade -r requirements.txt
+
+clobber::
+	rm -rf $(LAD_DIR) $(REGION_DIR)
+
+$(CACHE_DIR)organisation.csv:
+	#curl -qfs 'https://files.planning.data.gov.uk/organisation-collection/dataset/organisation.csv' > $@
+	# until we've fixed LAD/LPA regions
+	curl -qfs 'https://raw.githubusercontent.com/digital-land/organisation-collection/main/data/local-authority.csv' > $@
 
 $(CACHE_DIR)england.geojson:
 	@mkdir -p $(CACHE_DIR)
-	cp data/england.geojson $@
+	ln -s data/england.geojson $@
 
+# not on the platform, yet
 $(CACHE_DIR)green-space.geojson:
 	@mkdir -p $(CACHE_DIR)
-	cp data/green-space.geojson $@
+	ln -s data/green-space.geojson $@
 
 $(CACHE_DIR)%.geojson:
 	@mkdir -p $(CACHE_DIR)
 	curl -qfsL 'https://files.planning.data.gov.uk/dataset/$(notdir $@)' -o $@ 
 
-server:
-	python3 -m http.server
 
-init::
-	pip3 install --upgrade -r requirements.txt

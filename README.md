@@ -4,7 +4,9 @@ A demonstration of using planning data to estimate land is potentially suitable 
 
 # Roadmap
 
-* speed up processing!
+* speed up processing
+  - split excludes by LPA
+  - combine shapes and have a single intersection
 * build data nationally 
 * update area size to match filters
 * estitimate number of dwellings based on [gentle density](https://www.createstreets.com/why-should-we-build-more-georgian-terraces/)
@@ -15,8 +17,12 @@ A demonstration of using planning data to estimate land is potentially suitable 
 * detailed report of size of the areas
 * a link to the view to https://planning.data.gov.uk/map
 
-# Building the data
+# Rebuilding the data
 
+We recommend working in [virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/) before installing the python [requirements](requirements.txt), [makerules](https://github.com/digital-land/makerules) and other dependencies. Requires Make v4.0 or above.
+
+    $ make makerules
+    $ make init
     $ make
 
 # Licence
