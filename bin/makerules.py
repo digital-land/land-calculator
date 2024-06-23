@@ -49,17 +49,20 @@ if __name__ == "__main__":
 
     print("all::\n\t@:\n")
 
-    print("\nDATASETS=", end="")
+    print("\n# national data")
+    print("DATASETS=", end="")
     for dataset in sorted(datasets):
         print(f"{sep}$(CACHE_DIR){dataset}.geojson", end="")
     print()
 
-    print("\nREGION_DATA=", end="")
+    print("\n# regional data")
+    print("REGION_DATA=", end="")
     for region in sorted(regions):
         print(f"{sep}$(REGION_DIR){region}/region.geojson", end="")
     print()
 
-    print("\nLAD_DATA=", end="")
+    print("\n# LAD data")
+    print("LAD_DATA=", end="")
     for dataset in datasets:
         if dataset in ["region"]:
             continue
@@ -73,7 +76,7 @@ if __name__ == "__main__":
             )
     print()
 
-    print()
+    print("# partition datasets based on LAD")
     for dataset in datasets:
         if dataset in ["region"]:
             continue
@@ -85,19 +88,18 @@ if __name__ == "__main__":
             f"&:"
             f" $(CACHE_DIR){dataset}.geojson"
             f" $(CACHE_DIR)local-authority-district.geojson"
-            f" bin/shard-dataset.py"
+            f" bin/lad-dataset.py"
         )
-        print(f"\tpython3 bin/shard-dataset.py {dataset}")
+        print(f"\tpython3 bin/lad-dataset.py {dataset}")
         print()
 
-
-    print()
+    print("# build region boundaries")
     for region in sorted(regions):
         print(f"$(REGION_DIR){region}/region.geojson ", end="")
     print(
         f"&:"
         f" $(CACHE_DIR)region.geojson"
-        f" bin/shard-region.py"
+        f" bin/region-boundary.py"
     )
-    print(f"\tpython3 bin/shard-region.py")
+    print(f"\tpython3 bin/region-boundary.py")
     print()
