@@ -28,14 +28,10 @@ $(CACHE_DIR)organisation.csv:
 	# until we've fixed LAD/LPA regions
 	curl -qfs 'https://raw.githubusercontent.com/digital-land/organisation-collection/main/data/local-authority.csv' > $@
 
-$(CACHE_DIR)england.geojson:
-	@mkdir -p $(CACHE_DIR)
-	ln -s data/england.geojson $@
-
 # not on the platform, yet
 $(CACHE_DIR)green-space.geojson:
 	@mkdir -p $(CACHE_DIR)
-	ln -s data/green-space.geojson $@
+	ln -s ../../data/green-space.geojson $@
 
 $(CACHE_DIR)%.geojson:
 	@mkdir -p $(CACHE_DIR)
