@@ -31,7 +31,10 @@ if __name__ == "__main__":
     for lad, o in sorted(lads.items()):
         directory = lad_dir + lad
         if not os.path.exists(directory):
-            os.makedirs(directory)
+            try:
+                os.makedirs(directory)
+            except FileExistsError:
+                pass
 
         path = f"{directory}/{dataset}.geojson"
         if os.path.isfile(path):
