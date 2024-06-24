@@ -75,6 +75,7 @@ if __name__ == "__main__":
 
     print("\n# regional data")
     print("REGION_DATA=", end="")
+    print(f"{sep}$(REGION_DIR)/areas.json", end="")
     for region in sorted(regions):
         print(f"{sep}$(REGION_DIR){region}/region.geojson", end="")
         for option in options:
@@ -145,3 +146,12 @@ if __name__ == "__main__":
             print(f"$(REGION_DIR){region}/{option}.geojson: {paths} bin/combine.py")
             print(f"\tpython3 bin/combine.py $@ {paths}")
             print()
+
+    print("# calculate areas")
+    paths = []
+    for region in sorted(regions):
+        for option in options:
+            paths.append(f"$(REGION_DIR){region}/{option}.geojson")
+    paths = " ".join(paths)
+    print(f"$(REGION_DIR)/areas.json: {paths} bin/areas.py")
+    print(f"\tpython3 bin/areas.py $@ {paths}")

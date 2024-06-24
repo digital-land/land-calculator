@@ -9,7 +9,7 @@ A demonstration of using planning data to estimate land is potentially suitable 
   - <s>combine shapes and have a single intersection</s>
 * <s>build data nationally</s>
 * <s>style polgons less bold, make more transparent</s>
-* update hectares to match filters
+* <s>update hectares to match filters</s>
 * remove lines, slivers and sites < 37m<sup>2</sup>
 * include/exclude sites in green-belt option
 * sites within green-belt option

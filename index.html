@@ -191,19 +191,25 @@ function loadJson(url, callback) {
         .catch(error => console.error('Error loading JSON:', error));
 }
 
+function filePath(region, options, suffix) {
+    return "region" + "/" + region + "/" + options + suffix;
+}
+
 function updateTotals() {
-    console.log(areas)
     hectares = 0;
-	/*
-    document.querySelectorAll('input[name="E12000001"]:checked').forEach(function(e) {
-        hectares += areas[e.name]["region"];
+    options = "excludes";
+    document.querySelectorAll('input[type="checkbox"]:checked.region').forEach(function(e) {
+	region = e.name;
+	path = filePath(region, options, ".geojson");
+        hectares += Number(areas[path]);
+	console.log(areas[path], hectares);
     });
-    document.getElementById('total-value').innerHTML = Number(hectares).toLocaleString('en', {useGrouping:true});
-	*/
+    document.getElementById('total-value').innerHTML = Number(hectares).toLocaleString('en', {useGrouping:true, maximumSignificantDigits: 5 });
 }
 
 function addRegion(region, options) {
-    path = "region" + "/" + region + "/" + options + '.geojson'
+    path = filePath(region, options, '.geojson');
+    console.log("addRegion", region, options, path);
     var style = { "color": "#0b0c0c", "weight": 1, "opacity": 0.75 }
     loadJson(path, function(data) {
 	layer = L.geoJSON(data, {style:style});
@@ -221,14 +227,13 @@ function removeRegion(region) {
 }
 
 function checkbox(e) {
-    hectares = 0;
     if (e.classList.contains("region")) {
         removeRegion(e.name);
         if (e.checked) {
            addRegion(e.name, "excludes");
         }
+        updateTotals();
     }
-    updateTotals();
 }
 
 window.onload = function() {
