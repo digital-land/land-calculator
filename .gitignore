@@ -4,3 +4,5 @@
 tmp
 var/
 local/
+
+makerules.mk
