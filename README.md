@@ -10,7 +10,11 @@ A demonstration of using planning data to estimate land is potentially suitable 
 * <s>build data nationally</s>
 * <s>style polgons less bold, make more transparent</s>
 * <s>update hectares to match filters</s>
-* remove lines, slivers and sites < 37m<sup>2</sup>
+* <s>exclude [NSIP](https://www.planning.data.gov.uk/dataset/infrastructure-project)</s>
+* remove lines, slivers and other artifacts
+  - remove sites < 37m<sup>2</sup> in size
+  - remove shapes with a low [thinness ratio](https://math.stackexchange.com/questions/1336265/explanation-of-the-thinness-ratio-formula)
+  - remove Line, LineStrings and simplify GeometryCollections
 * include/exclude sites in green-belt option
 * sites within green-belt option
 * sites within 200m of a built up area
