@@ -10,7 +10,7 @@ A demonstration of using planning data to estimate land is potentially suitable 
 * <s>build data nationally</s>
 * <s>style polgons less bold, make more transparent</s>
 * <s>update hectares to match filters</s>
-* <s>exclude [NSIP](https://www.planning.data.gov.uk/dataset/infrastructure-project)</s>
+* exclude [NSIP](https://www.planning.data.gov.uk/dataset/infrastructure-project)
 * remove lines, slivers and other artifacts
   - remove sites < 37m<sup>2</sup> in size
   - remove shapes with a low [thinness ratio](https://math.stackexchange.com/questions/1336265/explanation-of-the-thinness-ratio-formula)
@@ -19,13 +19,17 @@ A demonstration of using planning data to estimate land is potentially suitable 
 * sites within green-belt option
 * sites within 200m of a built up area
 * within 15 minutes from ONS isochrones [map](https://pbarber.github.io/uk-isochrones-map/)
-* shard by LPA, not just LAD
+* within 800m of a main-line railway station
+* shard by LPA, not just LAD (National parks span regions)
 * detailed report of size of the areas per-LPA
 * popup showing LPA, area, etc for each shape
-* a link to the view to https://planning.data.gov.uk/map
+* a link to the current view to https://planning.data.gov.uk/map
 * <s>estitimate number of dwellings based on [gentle density](https://www.createstreets.com/why-should-we-build-more-georgian-terraces/)</s>
-* use OS Zoomstack built up areas
+* use OS Zoomstack rather than ONS built up areas
 * exclude OS Zoomstack surface water
+* exclude OS Zoomstack foreshore
+* exclude OS Zoomstack railways (buffered)
+* exclude OS Zoomstack rivers (buffered)
 
 # Rebuilding the data
 
