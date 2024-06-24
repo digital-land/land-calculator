@@ -56,15 +56,15 @@ html, body, #map {
   max-width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: 24px;
+  padding-bottom: 0;
 }
-#total-value {
+#total-hectares {
   font-size: 78px;
 }
-.units {
-  display: block;
-  text-align: right;
-  margin-top: -14px;
+#dwellings {
+  margin-top: 0;
+  padding-top: 0;
+  margin-left: 8px;
 }
 h1 {
   font-size: 32px;
@@ -89,8 +89,14 @@ fieldset {
 <div id="info">
   <div class="totals">
     <div id="total">
-      <span id="total-value"></span>
+      <span id="total-hectares"></span>
       <span class="units">hectares</span>
+    </div>
+    <div id="dwellings">
+        <p>Enough for around
+        <span id="total-dwellings"></span>
+          dwellings built at a gentle density
+        </p>
     </div>
   </div>
   <div id="options">
@@ -196,15 +202,20 @@ function filePath(region, options, suffix) {
 }
 
 function updateTotals() {
-    hectares = 0;
-    options = "excludes";
+    var hectares = 0;
+    var options = "excludes";
     document.querySelectorAll('input[type="checkbox"]:checked.region').forEach(function(e) {
 	region = e.name;
 	path = filePath(region, options, ".geojson");
         hectares += Number(areas[path]);
-	console.log(areas[path], hectares);
     });
-    document.getElementById('total-value').innerHTML = Number(hectares).toLocaleString('en', {useGrouping:true, maximumSignificantDigits: 5 });
+    dwellings = Number(hectares) * Number(50);
+    dwellings = Number(dwellings.toFixed(0)).toLocaleString('en', {useGrouping:true, maximumSignificantDigits: 2});
+    document.getElementById('total-dwellings').innerHTML = dwellings;
+
+    hectares = Number(hectares).toLocaleString('en', {useGrouping:true, maximumSignificantDigits: 5 });
+    document.getElementById('total-hectares').innerHTML = hectares;
+
 }
 
 function addRegion(region, options) {
