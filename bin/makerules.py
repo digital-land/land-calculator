@@ -10,6 +10,7 @@ exclude_datasets = [
     "built-up-area",
     "conservation-area",
     "flood-risk-zone",
+    "infrastructure-project",
     "green-belt",
     "green-space",
     "heritage-coast",
