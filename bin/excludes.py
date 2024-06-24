@@ -30,7 +30,7 @@ def fix_shapes(series):
     series = gpd.GeoSeries(shapes, crs='epsg:4326')
     series = series.make_valid()
 
-    shape = series.unary_union
+    shape = series.union_all()
     shape = make_valid(shape)
 
     return shape
@@ -51,7 +51,7 @@ if __name__ == "__main__":
             print(dataset_path)
             gdf = gdf.make_valid()
 
-            p = gdf.unary_union
+            p = gdf.union_all()
             p = fix_shapes(p)
 
             s = s.difference(p)
