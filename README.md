@@ -19,7 +19,7 @@ A demonstration of using planning data to estimate land is potentially suitable 
 * detailed report of size of the areas per-LPA
 * popup showing LPA, area, etc for each shape
 * a link to the view to https://planning.data.gov.uk/map
-* estitimate number of dwellings based on [gentle density](https://www.createstreets.com/why-should-we-build-more-georgian-terraces/)
+* <s>estitimate number of dwellings based on [gentle density](https://www.createstreets.com/why-should-we-build-more-georgian-terraces/)</s>
 * use OS Zoomstack built up areas
 * exclude OS Zoomstack surface water
 

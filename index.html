@@ -61,10 +61,17 @@ html, body, #map {
 #total-hectares {
   font-size: 78px;
 }
+div.units {
+  float: right;
+}
 #dwellings {
-  margin-top: 0;
-  padding-top: 0;
+  margin-top: ;
+  padding-top: 1em;
   margin-left: 8px;
+  margin-right: 8px;
+}
+#total-dwellings {
+  font-weight: bold;
 }
 h1 {
   font-size: 32px;
@@ -89,11 +96,11 @@ fieldset {
 <div id="info">
   <div class="totals">
     <div id="total">
-      <span id="total-hectares"></span>
-      <span class="units">hectares</span>
+      <div id="total-hectares"></div>
+      <div class="units">hectares</div>
     </div>
     <div id="dwellings">
-        <p>Enough for around
+        <p>Enough land for almost
         <span id="total-dwellings"></span>
           dwellings built at a gentle density
         </p>
@@ -211,7 +218,7 @@ function updateTotals() {
     });
     dwellings = Number(hectares) * Number(50);
     dwellings = Number(dwellings.toFixed(0)).toLocaleString('en', {useGrouping:true, maximumSignificantDigits: 2});
-    document.getElementById('total-dwellings').innerHTML = dwellings;
+    document.getElementById('total-dwellings').innerHTML = dwellings.replace(",000,000", " million").replace(",000", " thousand");
 
     hectares = Number(hectares).toLocaleString('en', {useGrouping:true, maximumSignificantDigits: 5 });
     document.getElementById('total-hectares').innerHTML = hectares;
