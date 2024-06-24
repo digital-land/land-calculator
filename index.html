@@ -218,7 +218,7 @@ function updateTotals() {
 	path = filePath(region, options, ".geojson");
         hectares += Number(areas[path]);
     });
-    dwellings = Number(hectares) * Number(50);
+    dwellings = Number(hectares) * Number(40);
     dwellings = Number(dwellings.toFixed(0)).toLocaleString('en', {useGrouping:true, maximumSignificantDigits: 2});
     document.getElementById('total-dwellings').innerHTML = dwellings.replace(",000,000", " million").replace(",000", " thousand");
 
