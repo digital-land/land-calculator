@@ -18,6 +18,7 @@ A demonstration of using planning data to estimate land is potentially suitable 
 * include/exclude sites in green-belt option
 * sites within green-belt option
 * sites within 200m of a built up area
+* split golf course from green-space
 * within 15 minutes from ONS isochrones [map](https://pbarber.github.io/uk-isochrones-map/)
 * within 800m of a main-line railway station
 * shard by LPA, not just LAD (National parks span regions)
@@ -30,6 +31,9 @@ A demonstration of using planning data to estimate land is potentially suitable 
 * exclude OS Zoomstack foreshore
 * exclude OS Zoomstack railways (buffered)
 * exclude OS Zoomstack rivers (buffered)
+* exclude OS Zoomstack schools (sites of type "Education")
+* exclude OS Zoomstack hospitals and clinics (sites of type "Medical Care")
+* exclude agricultural land with a high [ALC grade](https://www.gov.uk/government/publications/agricultural-land-assess-proposals-for-development/guide-to-assessing-development-proposals-on-agricultural-land)
 
 # Rebuilding the data
 
