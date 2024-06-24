@@ -204,8 +204,9 @@ function updateTotals() {
 
 function addRegion(region, options) {
     path = "region" + "/" + region + "/" + options + '.geojson'
+    var style = { "color": "#0b0c0c", "weight": 1, "opacity": 0.75 }
     loadJson(path, function(data) {
-        layer = L.geoJSON(data);
+	layer = L.geoJSON(data, {style:style});
         layer.addTo(map);
         map.fitBounds(layer.getBounds())
 	regions[region] = layer;

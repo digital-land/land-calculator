@@ -8,6 +8,7 @@ A demonstration of using planning data to estimate land is potentially suitable 
   - <s>split excludes by LPA</s>
   - <s>combine shapes and have a single intersection</s>
 * <s>build data nationally</s>
+* <s>style polgons less bold, make more transparent</s>
 * update hectares to match filters
 * remove lines, slivers and sites < 37m<sup>2</sup>
 * include/exclude sites in green-belt option
@@ -19,6 +20,8 @@ A demonstration of using planning data to estimate land is potentially suitable 
 * popup showing LPA, area, etc for each shape
 * a link to the view to https://planning.data.gov.uk/map
 * estitimate number of dwellings based on [gentle density](https://www.createstreets.com/why-should-we-build-more-georgian-terraces/)
+* use OS Zoomstack built up areas
+* exclude OS Zoomstack surface water
 
 # Rebuilding the data
 
