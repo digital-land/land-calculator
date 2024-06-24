@@ -44,17 +44,17 @@ if __name__ == "__main__":
                 gdf = gpd.read_file(dataset_path)
                 gdf = gdf[["geometry"]]
 
-                if (dataset == "flood-risk-zone"):
+                if dataset == "flood-risk-zone":
                     gdf = gdf.make_valid()
 
             ladf = gpd.read_file(lad_dataset_path)
             loaded = True
 
-        s = boundary = ladf.loc[ladf['reference'] == lad]
+        s = boundary = ladf.loc[ladf["reference"] == lad]
 
         if clip:
             s = gpd.clip(gdf, boundary)
 
         s = s.simplify(0.0001)
         s = s.make_valid()
-        s.to_file(path, driver='GeoJSON')
+        s.to_file(path, driver="GeoJSON")

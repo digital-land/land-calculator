@@ -97,15 +97,15 @@ fieldset {
   <h2>Within</h2>
   <fieldset>
   <legend>Region</legend>
-  <div><input type="checkbox" name="E12000001" class="within region" checked="checked" /><label>North East</label></div>
-  <div><input type="checkbox" disabled=disabled name="E12000002" class="within region" /><label>North West</label></div>
-  <div><input type="checkbox" disabled=disabled name="E12000003" class="within region" /><label>Yorkshire and The Humber</label></div>
-  <div><input type="checkbox" disabled=disabled name="E12000004" class="within region" /><label>East Midlands</label></div>
-  <div><input type="checkbox" disabled=disabled name="E12000005" class="within region" /><label>West Midlands</label></div>
-  <div><input type="checkbox" disabled=disabled name="E12000006" class="within region" /><label>East of England</label></div>
-  <div><input type="checkbox" disabled=disabled name="E12000007" class="within region" /><label>London</label></div>
-  <div><input type="checkbox" disabled=disabled name="E12000008" class="within region" /><label>South East</label></div>
-  <div><input type="checkbox" disabled=disabled name="E12000009" class="within region" /><label>South West</label></div>
+  <div><input type="checkbox" name="E12000001" class="within region" /><label>North East</label></div>
+  <div><input type="checkbox" name="E12000002" class="within region" /><label>North West</label></div>
+  <div><input type="checkbox" name="E12000003" class="within region" /><label>Yorkshire and The Humber</label></div>
+  <div><input type="checkbox" name="E12000004" class="within region" checked=checked/><label>East Midlands</label></div>
+  <div><input type="checkbox" name="E12000005" class="within region" checked=checked/><label>West Midlands</label></div>
+  <div><input type="checkbox" name="E12000006" class="within region" /><label>East of England</label></div>
+  <div><input type="checkbox" name="E12000007" class="within region" /><label>London</label></div>
+  <div><input type="checkbox" name="E12000008" class="within region" /><label>South East</label></div>
+  <div><input type="checkbox" name="E12000009" class="within region" /><label>South West</label></div>
   </fieldset>
   <fieldset>
   <legend>Travel time</legend>
@@ -194,16 +194,17 @@ function loadJson(url, callback) {
 function updateTotals() {
     console.log(areas)
     hectares = 0;
+	/*
     document.querySelectorAll('input[name="E12000001"]:checked').forEach(function(e) {
         hectares += areas[e.name]["region"];
     });
     document.getElementById('total-value').innerHTML = Number(hectares).toLocaleString('en', {useGrouping:true});
+	*/
 }
 
 function addRegion(region, options) {
-    filename = region + options + '.geojson'
-    filename = region + '-excludes-built-up-area' + '.geojson'
-    loadJson("shapes/" + filename, function(data) {
+    path = "region" + "/" + region + "/" + options + '.geojson'
+    loadJson(path, function(data) {
         layer = L.geoJSON(data);
         layer.addTo(map);
         map.fitBounds(layer.getBounds())
@@ -223,14 +224,14 @@ function checkbox(e) {
     if (e.classList.contains("region")) {
         removeRegion(e.name);
         if (e.checked) {
-           addRegion(e.name, "-excludes");
+           addRegion(e.name, "excludes");
         }
     }
     updateTotals();
 }
 
 window.onload = function() {
-    loadJson("shapes/areas.json", function(json) {
+    loadJson("region/areas.json", function(json) {
 	areas = json;
 	document.querySelectorAll('#options input').forEach(function(e) {
 	    e.addEventListener("change", function() { checkbox(this); })

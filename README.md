@@ -4,17 +4,19 @@ A demonstration of using planning data to estimate land is potentially suitable 
 
 # Roadmap
 
-* speed up processing
-  - split excludes by LPA
-  - combine shapes and have a single intersection
-* build data nationally 
+* <s>speed up processing</s>
+  - <s>split excludes by LPA</s>
+  - <s>combine shapes and have a single intersection</s>
+* <s>build data nationally</s>
 * update area size to match filters
+* remove lines, slivers and sites < 37m<sup>2</sup>
 * estitimate number of dwellings based on [gentle density](https://www.createstreets.com/why-should-we-build-more-georgian-terraces/)
 * exclude green-belt option
 * within green-belt option
 * within 15 minutes from ONS isochrones [map](https://pbarber.github.io/uk-isochrones-map/)
 * within 200m of a built up area
-* detailed report of size of the areas
+* update area size to match filters
+* detailed report of size of the areas per-LPA
 * a link to the view to https://planning.data.gov.uk/map
 
 # Rebuilding the data

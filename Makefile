@@ -2,11 +2,11 @@ CACHE_DIR=var/cache/
 LAD_DIR=var/lad/
 REGION_DIR=region/
 
-REGION_DATA=
-
 include makerules.mk
 
-all::	$(REGION_DATA) $(LAD_DATA)
+DATA=$(REGION_DATA)
+
+all::	$(DATA)
 
 server:
 	python3 -m http.server
@@ -20,7 +20,7 @@ init::
 	pip3 install --upgrade -r requirements.txt
 
 clobber::
-	rm -rf $(LAD_DIR) $(REGION_DIR)
+	rm -rf $(LOCAL_DIR) $(REGION_DIR)
 
 $(CACHE_DIR)organisation.csv:
 	#curl -qfs 'https://files.planning.data.gov.uk/organisation-collection/dataset/organisation.csv' > $@
