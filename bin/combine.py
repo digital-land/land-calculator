@@ -5,8 +5,6 @@
 import sys
 import geopandas as gpd
 
-gpd.options.io_engine = "pyogrio"
-
 
 if __name__ == "__main__":
     output_path = sys.argv[1]
@@ -18,5 +16,5 @@ if __name__ == "__main__":
         for index, row in df.iterrows():
             rows.append({"geometry": row["geometry"], "name": row["name"]})
 
-    gdf = gpd.GeoDataFrame(rows, crs='epsg:4326')
+    gdf = gpd.GeoDataFrame(rows, crs="epsg:4326")
     gdf.to_file(output_path, driver="GeoJSON")

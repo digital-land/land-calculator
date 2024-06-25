@@ -3,8 +3,6 @@
 import os
 import geopandas as gpd
 
-gpd.options.io_engine = "pyogrio"
-
 cache_dir = "var/cache/"
 region_dir = "region/"
 

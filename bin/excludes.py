@@ -7,11 +7,6 @@ import geopandas as gpd
 from shapely import Polygon, MultiPolygon, GeometryCollection
 from shapely import make_valid
 
-import warnings
-warnings.filterwarnings('ignore', 'GeoSeries.notna', UserWarning)
-
-gpd.options.io_engine = "pyogrio"
-
 
 # ensure we only work with polygons
 def fix_shapes(series):
@@ -27,7 +22,7 @@ def fix_shapes(series):
                 if type(shape) is Polygon or type(shape) is MultiPolygon:
                     shapes.append(shape)
 
-    series = gpd.GeoSeries(shapes, crs='epsg:4326')
+    series = gpd.GeoSeries(shapes, crs="epsg:4326")
     series = series.make_valid()
 
     shape = series.union_all()
@@ -57,13 +52,15 @@ if __name__ == "__main__":
             s = s.difference(p)
             s = fix_shapes(s)
 
-    s = gpd.GeoSeries(s, crs='epsg:4326')
+    s = gpd.GeoSeries(s, crs="epsg:4326")
     s = s.simplify(0.0001)
     s = s.make_valid()
 
-    gdf = gpd.GeoDataFrame({
-        'geometry': s,
-        'name': name,
-    })
+    gdf = gpd.GeoDataFrame(
+        {
+            "geometry": s,
+            "name": name,
+        }
+    )
 
     gdf.to_file(output_path, driver="GeoJSON")
