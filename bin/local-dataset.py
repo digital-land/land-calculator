@@ -8,7 +8,6 @@ import sys
 import csv
 import geopandas as gpd
 
-gpd.options.io_engine = "pyogrio"
 
 cache_dir = "var/cache/"
 lad_dir = "var/lad/"
