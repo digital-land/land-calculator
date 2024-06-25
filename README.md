@@ -1,6 +1,6 @@
 A demonstration of using planning data to estimate land is unconstrained and potentially suitable for development.
 
-    https://planning.data.gov.uk
+[https://planning.data.gov.uk](https://planning.data.gov.uk)
 
 # Roadmap
 
