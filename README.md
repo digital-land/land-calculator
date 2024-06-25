@@ -34,6 +34,9 @@ A demonstration of using planning data to estimate land is unconstrained and pot
 * exclude OS Zoomstack schools (sites of type "Education")
 * exclude OS Zoomstack hospitals and clinics (sites of type "Medical Care")
 * exclude agricultural land with a high [ALC grade](https://www.gov.uk/government/publications/agricultural-land-assess-proposals-for-development/guide-to-assessing-development-proposals-on-agricultural-land)
+* stacked bar chart of land use in selected areas
+
+<a href="https://www.flickr.com/photos/psd/53780793882/in/dateposted-ff/" title="Estimating land availability"><img src="https://live.staticflickr.com/65535/53780793882_5ac8d56fa2_c.jpg" width="601" height="800" alt="Estimating land availability"/></a>
 
 # Rebuilding the data
 
