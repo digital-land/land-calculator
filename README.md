@@ -1,4 +1,4 @@
-A demonstration of using planning data to estimate land is potentially suitable for development.
+A demonstration of using planning data to estimate land is unconstrained and potentially suitable for development.
 
     https://planning.data.gov.uk
 
@@ -10,7 +10,8 @@ A demonstration of using planning data to estimate land is potentially suitable 
 * <s>build data nationally</s>
 * <s>style polgons less bold, make more transparent</s>
 * <s>update hectares to match filters</s>
-* exclude [NSIP](https://www.planning.data.gov.uk/dataset/infrastructure-project)
+* <s>estitimate number of dwellings based on [gentle density](https://www.createstreets.com/why-should-we-build-more-georgian-terraces/)</s>
+* <s>exclude [NSIP](https://www.planning.data.gov.uk/dataset/infrastructure-project)</s>
 * remove lines, slivers and other artifacts
   - remove sites < 37m<sup>2</sup> in size
   - remove shapes with a low [thinness ratio](https://math.stackexchange.com/questions/1336265/explanation-of-the-thinness-ratio-formula)
@@ -25,7 +26,6 @@ A demonstration of using planning data to estimate land is potentially suitable 
 * detailed report of size of the areas per-LPA
 * popup showing LPA, area, etc for each shape
 * a link to the current view to https://planning.data.gov.uk/map
-* <s>estitimate number of dwellings based on [gentle density](https://www.createstreets.com/why-should-we-build-more-georgian-terraces/)</s>
 * use OS Zoomstack rather than ONS built up areas
 * exclude OS Zoomstack surface water
 * exclude OS Zoomstack foreshore
