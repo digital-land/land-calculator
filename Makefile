@@ -37,4 +37,6 @@ $(CACHE_DIR)%.geojson:
 	@mkdir -p $(CACHE_DIR)
 	curl -qfsL 'https://files.planning.data.gov.uk/dataset/$(notdir $@)' -o $@ 
 
-
+lint::
+	black .
+	flake8 .

@@ -1,6 +1,13 @@
 geopandas
 shapely
+matplotlib
+mapclassify
 pyrosm
 pyogrio
 esridump
 simplejson
+folium
+jupyter
+flake8
+black
+black[jupyter]
