@@ -6,6 +6,27 @@ import sys
 import geopandas as gpd
 from shapely import Polygon, MultiPolygon, GeometryCollection
 from shapely import make_valid
+from pyproj import Geod
+from decimal import Decimal
+
+
+geod = Geod(ellps="WGS84")
+
+
+def filter_slivers(multipolygon, min_area=3700):
+    polygons = []
+    for polygon in list(multipolygon.geoms):
+        area, perimiter = geod.geometry_area_perimeter(polygon)
+
+        area = abs(area)
+        perimiter = abs(perimiter)
+
+        if abs(area) < min_area:
+            continue
+
+        polygons.append(polygon)
+
+    return MultiPolygon(polygons)
 
 
 # ensure we only work with polygons
@@ -56,11 +77,17 @@ if __name__ == "__main__":
     s = s.simplify(0.0001)
     s = s.make_valid()
 
+    s = fix_shapes(s)
+    s = filter_slivers(s)
+
     gdf = gpd.GeoDataFrame(
-        {
-            "geometry": s,
-            "name": name,
-        }
+        [
+            {
+                "geometry": s,
+                "name": name,
+            }
+        ],
+        crs="epsg:4326",
     )
 
     gdf.to_file(output_path, driver="GeoJSON")
