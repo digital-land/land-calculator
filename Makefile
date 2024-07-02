@@ -24,9 +24,7 @@ clobber::
 
 $(CACHE_DIR)organisation.csv:
 	@mkdir -p $(CACHE_DIR)
-	#curl -qfs 'https://files.planning.data.gov.uk/organisation-collection/dataset/organisation.csv' > $@
-	# until we've fixed LAD/LPA regions
-	curl -qfs 'https://raw.githubusercontent.com/digital-land/organisation-collection/main/data/local-authority.csv' > $@
+	curl -qfs 'https://files.planning.data.gov.uk/organisation-collection/dataset/organisation.csv' > $@
 
 # not on the platform, yet
 $(CACHE_DIR)green-space.geojson:
