@@ -115,11 +115,11 @@ fieldset {
   <div><input type="checkbox" name="E12000001" class="within region" /><label>North East</label></div>
   <div><input type="checkbox" name="E12000002" class="within region" /><label>North West</label></div>
   <div><input type="checkbox" name="E12000003" class="within region" /><label>Yorkshire and The Humber</label></div>
-  <div><input type="checkbox" name="E12000004" class="within region" checked=checked/><label>East Midlands</label></div>
-  <div><input type="checkbox" name="E12000005" class="within region" checked=checked/><label>West Midlands</label></div>
+  <div><input type="checkbox" name="E12000004" class="within region" /><label>East Midlands</label></div>
+  <div><input type="checkbox" name="E12000005" class="within region" /><label>West Midlands</label></div>
   <div><input type="checkbox" name="E12000006" class="within region" /><label>East of England</label></div>
   <div><input type="checkbox" name="E12000007" class="within region" /><label>London</label></div>
-  <div><input type="checkbox" name="E12000008" class="within region" /><label>South East</label></div>
+  <div><input type="checkbox" name="E12000008" class="within region" checked=checked /><label>South East</label></div>
   <div><input type="checkbox" name="E12000009" class="within region" /><label>South West</label></div>
   </fieldset>
   <fieldset>
@@ -129,7 +129,7 @@ fieldset {
   </fieldset>
   <fieldset>
   <legend>Urban environment</legend>
-  <div><input type="checkbox" disabled=disabled name="within-green-belt" class="within green-belt" /><label>Green belt</label></div>
+  <div><input id="within-green-belt" type="checkbox" name="within-green-belt" class="within green-belt" /><label>Green belt</label></div>
   <div><input type="checkbox" disabled=disabled name="within-200m" class="within buffer" /><label>200m of a built up area</label></div>
   <div><input type="checkbox" disabled=disabled name="within-800m-station" class="within buffer" /><label>800m of a main-line railway station</label></div>
   </fieldset>
@@ -137,7 +137,7 @@ fieldset {
   <fieldset>
   <legend>Urban environment</legend>
   <div><input type="checkbox" disabled=disabled checked=checked name="built-up-area"/><label>Built up areas</label></div>
-  <div><input type="checkbox" disabled=disables name="green-belt" checked=checked/><label>Green belt</label></div>
+  <div><input id="exclude-green-belt" type="checkbox" checked=checked name="green-belt" /><label>Green belt</label></div>
   <div><input type="checkbox"  disabled=disabled checked=checked name="allotments"/><label>Allotments</label></div>
   <div><input type="checkbox"  disabled=disabled checked=checked name="cemetery"/><label>Cemetery</label></div>
   <div><input type="checkbox"  disabled=disabled checked=checked name="religious-ground"/><label>Religious grounds</label></div>
@@ -232,13 +232,24 @@ function loadJson(url, callback) {
         .catch(error => console.error('Error loading JSON:', error));
 }
 
+function getOptions() {
+    var options = "";
+    if (document.querySelector('#within-green-belt').checked) {
+        options = "within-green-belt";
+    } else if (!document.querySelector('#exclude-green-belt').checked) {
+        options = "includes-green-belt";
+    } else {
+        options = "excludes";
+    }
+    return options;
+}
+
 function filePath(region, options, suffix) {
     return "region" + "/" + region + "/" + options + suffix;
 }
 
-function updateTotals() {
+function updateTotals(options) {
     var hectares = 0;
-    var options = "excludes";
     document.querySelectorAll('input[type="checkbox"]:checked.region').forEach(function(e) {
 	region = e.name;
 	path = filePath(region, options, ".geojson");
@@ -246,6 +257,7 @@ function updateTotals() {
     });
     dwellings = Number(hectares) * Number(40);
     dwellings = Number(dwellings.toFixed(0)).toLocaleString('en', {useGrouping:true, maximumSignificantDigits: 2});
+
     document.getElementById('total-dwellings').innerHTML = dwellings.replace(",000,000", " million").replace(",000", " thousand");
 
     hectares = Number(hectares).toLocaleString('en', {useGrouping:true, maximumSignificantDigits: 5 });
@@ -255,12 +267,12 @@ function updateTotals() {
 
 function addRegion(region, options) {
     path = filePath(region, options, '.geojson');
-    console.log("addRegion", region, options, path);
     var style = { "color": "#0b0c0c", "weight": 1, "opacity": 0.75 }
+    console.log(path);
     loadJson(path, function(data) {
 	layer = L.geoJSON(data, {style:style});
         layer.addTo(map);
-        map.fitBounds(layer.getBounds())
+        //map.fitBounds(layer.getBounds())
 	regions[region] = layer;
     });
 }
@@ -272,14 +284,36 @@ function removeRegion(region) {
     }
 }
 
+function refresh() {
+    options = getOptions();
+    document.querySelectorAll('input[type="checkbox"]:checked.region').forEach(function(e) {
+	removeRegion(e.name);
+	addRegion(e.name, options);
+    });
+    updateTotals(options);
+}
+
 function checkbox(e) {
-    if (e.classList.contains("region")) {
-        removeRegion(e.name);
-        if (e.checked) {
-           addRegion(e.name, "excludes");
-        }
-        updateTotals();
+    // green-belt radio button
+    if (e.id == "within-green-belt") {
+	document.getElementById("exclude-green-belt").checked = false
+    } else if (e.id == "exclude-green-belt") {
+        document.getElementById("within-green-belt").checked = false
     }
+
+    options = getOptions();
+
+    // region checkbox
+    if (e.classList.contains("region")) {
+	removeRegion(e.name);
+	if (e.checked) {
+	   addRegion(e.name, options);
+	}
+    } else {
+	refresh();
+    }
+
+    updateTotals(options);
 }
 
 window.onload = function() {
@@ -287,8 +321,8 @@ window.onload = function() {
 	areas = json;
 	document.querySelectorAll('#options input').forEach(function(e) {
 	    e.addEventListener("change", function() { checkbox(this); })
-	    checkbox(e);
 	});
+	refresh();
     });
 };
   </script>

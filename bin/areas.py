@@ -2,6 +2,7 @@
 
 # combine shapes
 
+import os
 import sys
 import geopandas as gpd
 from decimal import Decimal
@@ -25,8 +26,9 @@ if __name__ == "__main__":
 
     areas = {}
     for dataset_path in dataset_paths:
-        gdf = gpd.read_file(dataset_path)
-        areas[dataset_path] = hectares(gdf)
+        if os.path.getsize(dataset_path) > 5:
+            gdf = gpd.read_file(dataset_path)
+            areas[dataset_path] = hectares(gdf)
 
     with open(output_path, "w") as f:
         json.dump(areas, f)

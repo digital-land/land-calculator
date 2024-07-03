@@ -16,8 +16,8 @@ A demonstration of using planning data to estimate land is unconstrained and pot
   - <s>remove sites < 37m<sup>2</sup> in size</s>
   - remove shapes with a low [thinness ratio](https://math.stackexchange.com/questions/1336265/explanation-of-the-thinness-ratio-formula)
   - <s>remove Line, LineStrings and simplify GeometryCollections</s>
-* include/exclude sites in green-belt option
-* sites within green-belt option
+* <s>include/exclude sites in green-belt option</s>
+* <s>sites within green-belt option</s>
 * sites within 200m of a built up area
 * split golf course from green-space
 * within 15 minutes from ONS isochrones [map](https://pbarber.github.io/uk-isochrones-map/)
@@ -25,6 +25,7 @@ A demonstration of using planning data to estimate land is unconstrained and pot
 * shard by LPA, not just LAD (National parks span regions)
 * detailed report of size of the areas per-LPA
 * popup showing LPA, area, etc for each shape
+* update URL for current options
 * a link to the current view to https://planning.data.gov.uk/map
 * use OS Zoomstack rather than ONS built up areas
 * exclude OS Zoomstack surface water

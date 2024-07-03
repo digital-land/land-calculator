@@ -42,10 +42,12 @@ options = {
         "excludes": exclude_datasets,
         "within": "local-authority-district",
     },
-}
-x = {
+    "includes-green-belt": {
+        "excludes": list(set(exclude_datasets) - set(["green-belt"])),
+        "within": "local-authority-district",
+    },
     "within-green-belt": {
-        "excludes": list(set(exclude_datasets) - set("green-belt")),
+        "excludes": list(set(exclude_datasets) - set(["green-belt"])),
         "within": "green-belt",
     },
 }
@@ -60,11 +62,12 @@ if __name__ == "__main__":
     for o in csv.DictReader(open("var/cache/organisation.csv")):
         if o["local-planning-authority"] and not o["end-date"]:
             lad = o["local-authority-district"]
-            lads[lad] = o
+            if lad:
+                lads[lad] = o
 
-            region = o["region"]
-            regions.setdefault(region, [])
-            regions[region].append(lad)
+                region = o["region"]
+                regions.setdefault(region, [])
+                regions[region].append(lad)
 
     print("all::\n\t@:\n")
 

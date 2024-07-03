@@ -9,11 +9,17 @@ from shapely import make_valid
 from pyproj import Geod
 from decimal import Decimal
 
+import warnings
+
+warnings.filterwarnings("ignore", "GeoSeries.notna", UserWarning)
+
 
 geod = Geod(ellps="WGS84")
 
 
 def filter_slivers(multipolygon, min_area=3700):
+    if type(s) is Polygon:
+        multipolygon = MultiPolygon([multipolygon])
     polygons = []
     for polygon in list(multipolygon.geoms):
         area, perimiter = geod.geometry_area_perimeter(polygon)
@@ -59,6 +65,7 @@ if __name__ == "__main__":
     dataset_paths = sys.argv[4:]
 
     boundary = gpd.read_file(boundary_path)
+    boundary = make_valid(boundary)
     s = boundary
 
     for dataset_path in dataset_paths:
