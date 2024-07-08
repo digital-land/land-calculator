@@ -1,6 +1,8 @@
 .venv
 .ipynb_checkpoints
 
+**.swp
+
 tmp
 var/
 local/
