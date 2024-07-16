@@ -7,7 +7,7 @@ exclude_datasets = [
     "ancient-woodland",
     "area-of-outstanding-natural-beauty",
     "battlefield",
-    "built-up-area",
+    "urban-area",
     "conservation-area",
     "flood-risk-zone",
     "infrastructure-project",
@@ -148,6 +148,7 @@ if __name__ == "__main__":
             paths = " ".join(paths)
 
             print(f"$(REGION_DIR){region}/{option}.geojson: {paths} bin/combine.py")
+            print(f"\t@mkdir -p $(dir $@)")
             print(f"\tpython3 bin/combine.py $@ {paths}")
             print()
 
