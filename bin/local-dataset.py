@@ -19,7 +19,7 @@ if __name__ == "__main__":
     lad_dataset_path = f"{cache_dir}local-authority-district.geojson"
 
     lads = {}
-    for o in csv.DictReader(open("data/local-authority.csv")):
+    for o in csv.DictReader(open("var/cache/organisation.csv")):
         if o["local-planning-authority"] and not o["end-date"]:
             lad = o["local-authority-district"]
             lads[lad] = o
