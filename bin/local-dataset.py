@@ -55,7 +55,7 @@ if __name__ == "__main__":
         s = boundary = ladf.loc[ladf["reference"] == lad]
 
         if clip:
-            s = gpd.clip(gdf, boundary)
+            s = gpd.clip(gdf, boundary, keep_geom_type=True)
 
         s = s.simplify(0.0001)
         s = s.make_valid()
