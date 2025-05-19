@@ -18,6 +18,7 @@ A demonstration of using planning data to estimate land is unconstrained and pot
   - <s>remove Line, LineStrings and simplify GeometryCollections</s>
 * <s>include/exclude sites in green-belt option</s>
 * <s>sites within green-belt option</s>
+* move from large GeoJSON files to <a href="https://martinfleischmann.net/how-to-create-a-vector-based-web-map-hosted-on-github/">vector tiles</a>
 * sites within 200m of a built up area
 * split golf course from green-space
 * within 15 minutes from ONS isochrones [map](https://pbarber.github.io/uk-isochrones-map/)
@@ -36,8 +37,13 @@ A demonstration of using planning data to estimate land is unconstrained and pot
 * exclude OS Zoomstack hospitals and clinics (sites of type "Medical Care")
 * exclude agricultural land with a high [ALC grade](https://www.gov.uk/government/publications/agricultural-land-assess-proposals-for-development/guide-to-assessing-development-proposals-on-agricultural-land)
 * stacked bar chart of land use in selected areas
+* [Indicies of Multiple Deprevation](https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019) Barriers to Housing and Services Domain (2019) (statistical cut-off)
 
 <a href="https://www.flickr.com/photos/psd/53780793882/in/dateposted-ff/" title="Estimating land availability"><img src="https://live.staticflickr.com/65535/53780793882_5ac8d56fa2_c.jpg" width="400" alt="Estimating land availability"/></a>
+
+# Grid approach
+
+The approach of subtracting geometries take time to process and creates issues with invalid polygons. Processing the country as a matrix of 1 hectare grids could avoid geometry issues, speed up processing, reduce the size of the data, and simplify how the browser shows switching options.
 
 # Rebuilding the data
 
